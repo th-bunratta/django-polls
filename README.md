@@ -4,7 +4,7 @@ by Tharathorn Bunrattanasathian
 #### To-do overview
 |Part #     | Description|Done?|
 |:---------:|:----------:|:---:|
-|I| Project, app, and first view creation ||
+|I| Project, app, and first view creation |✓|
 |II| Database and model setup, migrations, Django model API, and site administration basics ||
 |III| More about responsive views, templates, request handling, and URL namespacing |   |
 |IV| Simple forms, generic and armed views |   |
