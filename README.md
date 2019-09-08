@@ -5,7 +5,7 @@ by Tharathorn Bunrattanasathian
 |Part #     | Description|Done?|
 |:---------:|:----------:|:---:|
 |I| Project, app, and first view creation |✓|
-|II| Database and model setup, migrations, Django model API, and site administration basics ||
+|II| Database and model setup, migrations, Django model API, and site administration basics |✓|
 |III| More about responsive views, templates, request handling, and URL namespacing |   |
 |IV| Simple forms, generic and armed views |   |
 |V| All about testing basics in Django  |   |
