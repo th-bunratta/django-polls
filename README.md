@@ -1,15 +1,21 @@
 ## Django Polls Tutorial App
 by Tharathorn Bunrattanasathian
 
+### How to run the app server for the project 
+1. Run ```pip install``` first.
+2. Import the necessary Question data from ```db.sql``` to the SQLite database.
+3. Run ```python manage.py runserver``` and, Voila!, the server should listen on the default port.
+
+
 ### Dependency requirements
 Easily install dependencies by using ```requirements.txt```
 
-| **Packages** | **Version** |
+| Packages | Version |
 |:---:|:---:|
 |Python | 3.7.3 or higher|
 |Django | 2.2.5|
 
-### To-do overview
+### Progress overview
 |Part #     | Description|Done?|
 |:---------:|:----------:|:---:|
 |I| Project, app, and first view creation |✓|
