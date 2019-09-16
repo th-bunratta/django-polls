@@ -1,8 +1,8 @@
 ## Django Polls Tutorial App
-*by Tharathorn Bunrattanasathian*
+#### *by Tharathorn Bunrattanasathian*
 
 This application is a poll Django application consisting of two questions about western popular artists. In this app poll questions are located in ```\polls``` route, and
-a voter can only anonymously select one choice at a time. If the voter wants to choose more, they can do so by clicking on ```Vote again```.
+a voter can anonymously select only one choice at a time. If the voter wants to choose more, they can do so by clicking on ```Vote again```.
 
 ### Dependency requirements
 Easily install dependencies by using [```requirements.txt```](requirements.txt)
