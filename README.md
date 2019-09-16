@@ -1,6 +1,17 @@
 ## Django Polls Tutorial App
 by Tharathorn Bunrattanasathian
 
+### Dependency requirements
+Easily install dependencies by using ```requirements.txt```
+
+| Packages | Version |
+|:---:|:---:|
+|Python | 3.7.3 or higher|
+|Django | 2.2.5|
+|Python-decouple | 3.1 |
+|dj-database-url|0.5.0|
+|Unipath|1.1|
+
 ### How to run the app server for the project 
 1. Make sure you are in the root directory (repository root) of the project
 2. Create ```settings.ini``` for your local app environment settings *(See default guide below)*
@@ -18,16 +29,6 @@ by Tharathorn Bunrattanasathian
 |LANGUAGE_CODE|en-us|Default language for the project|
 |TIME_ZONE|Asia/Bangkok||
 |DATABASE_URL|sqlite://./db.sqlite3|If your SQLite database file is in the same root directory as the project|
-### Dependency requirements
-Easily install dependencies by using ```requirements.txt```
-
-| Packages | Version |
-|:---:|:---:|
-|Python | 3.7.3 or higher|
-|Django | 2.2.5|
-|Python-decouple | 3.1 |
-|dj-database-url|0.5.0|
-|Unipath|1.1|
 
 ### Progress overview
 |Part #     | Description|Done?|
