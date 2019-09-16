@@ -2,9 +2,12 @@
 by Tharathorn Bunrattanasathian
 
 ### How to run the app server for the project 
-1. Run ```pip install``` first.
-2. Import the necessary Question data from ```db.sql``` to the SQLite database.
-3. Run ```python manage.py runserver``` and, Voila!, the server should listen on the default port.
+1. Make sure you are in the root directory (repository root) of the project
+2. Run ```pip install``` first.
+3. Import the necessary Question data from ```db.sql``` to the SQLite database. You can either use the following database browsers to migrate it:
+    - DB Browser for SQLite
+    - DBeaver
+4. Run ```python manage.py runserver``` and, Voila!, the server should listen on the default port.
 
 
 ### Dependency requirements
@@ -14,6 +17,7 @@ Easily install dependencies by using ```requirements.txt```
 |:---:|:---:|
 |Python | 3.7.3 or higher|
 |Django | 2.2.5|
+|Python-decouple | 3.1|
 
 ### Progress overview
 |Part #     | Description|Done?|
