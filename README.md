@@ -1,8 +1,11 @@
 ## Django Polls Tutorial App
-by Tharathorn Bunrattanasathian
+*by Tharathorn Bunrattanasathian*
+
+This application is a poll Django application consisting of two questions about western popular artists. In this app poll questions are located in ```\polls``` route, and
+a voter can only anonymously select one choice at a time. If the voter wants to choose more, they can do so by clicking on ```Vote again```.
 
 ### Dependency requirements
-Easily install dependencies by using ```requirements.txt```
+Easily install dependencies by using [```requirements.txt```](requirements.txt)
 
 | Packages | Version |
 |:---:|:---:|
@@ -16,19 +19,19 @@ Easily install dependencies by using ```requirements.txt```
 1. Make sure you are in the root directory (repository root) of the project
 2. Create ```settings.ini``` for your local app environment settings *(See default guide below)*
     - Make sure your secret key is strong enough. (Recommended: ```PBKDF2``` algorithm with a ```SHA256``` hash)
-3. Run ```pip install -r requirements.txt``` first to install required packages for the project.
-4. Import the optional Question data from ```db.sql``` to the SQLite database. You can either use the following database browsers to migrate it:
+3. Run ```pip install -r ```[```requirements.txt```](requirements.txt) first to install required packages for the project.
+4. Import the optional Question data from [```db.sql```](db.sql) to the SQLite database. You can use either of the following database browsers to migrate it:
     - DB Browser for SQLite
     - DBeaver
-5. Run ```python manage.py runserver``` and, Voila!, the server should listen on the default port.
+5. Run ```python ```[```manage.py```](manage.py)``` runserver``` and, Voila!, the server should listen on the default port.
 
-### Django configuration file (```.env```/```.ini```) default guide
+### Django configuration file (```.env```/```.ini```) defaults Guide
 | Config variable | Value | Note |
 |:---:|:---:|:---:|
-|DEBUG|True|If the project are in development mode|
-|LANGUAGE_CODE|en-us|Default language for the project|
-|TIME_ZONE|Asia/Bangkok||
-|DATABASE_URL|sqlite://./db.sqlite3|If your SQLite database file is in the same root directory as the project|
+|DEBUG|```True```|If the project are in development mode|
+|LANGUAGE_CODE|```en-us```|Default language for the project|
+|TIME_ZONE|```Asia/Bangkok```||
+|DATABASE_URL|```sqlite://./db.sqlite3```|If your SQLite database file is in the same root directory as the project|
 
 ### Progress overview
 |Part #     | Description|Done?|
