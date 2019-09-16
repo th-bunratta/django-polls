@@ -22,7 +22,7 @@ Easily install dependencies by using ```requirements.txt```
     - DBeaver
 5. Run ```python manage.py runserver``` and, Voila!, the server should listen on the default port.
 
-### .env default guide
+### Django configuration file (```.env```/```.ini```) default guide
 | Config variable | Value | Note |
 |:---:|:---:|:---:|
 |DEBUG|True|If the project are in development mode|
