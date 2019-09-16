@@ -19,11 +19,11 @@ Easily install dependencies by using [```requirements.txt```](requirements.txt)
 1. Make sure you are in the root directory (repository root) of the project
 2. Create ```settings.ini``` for your local app environment settings *(See default guide below)*
     - Make sure your secret key is strong enough. (Recommended: ```PBKDF2``` algorithm with a ```SHA256``` hash)
-3. Run ```pip install -r ```[```requirements.txt```](requirements.txt) first to install required packages for the project.
+3. Run <code>pip install -r [requirements.txt](requirements.txt)</code> first to install required packages for the project.
 4. Import the optional Question data from [```db.sql```](db.sql) to the SQLite database. You can use either of the following database browsers to migrate it:
     - DB Browser for SQLite
     - DBeaver
-5. Run ```python ```[```manage.py```](manage.py)``` runserver``` and, Voila!, the server should listen on the default port.
+5. Run <code>python [manage.py](manage.py) runserver</code> and, Voila!, the server should listen on the default port.
 
 ### Django configuration file (```.env```/```.ini```) defaults Guide
 | Config variable | Value | Note |
