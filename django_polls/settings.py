@@ -15,7 +15,7 @@ from dj_database_url import parse as db_url
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = Path(__file__).parent #os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).parent # os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 # Quick-start development settings - unsuitable for production
@@ -81,10 +81,6 @@ DATABASES = {
         default='sqlite:///' + BASE_DIR.child('db.sqlite3'),
         cast=db_url
     )
-    # {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # }
 }
 
 
