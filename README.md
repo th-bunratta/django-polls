@@ -25,7 +25,7 @@ For the list of dependent packages, see as follows or look up in [```requirement
 4. (*Optional*) Import the sample data by using the Django built-in command<pre>python [manage.py](manage.py) loaddata sample.json</pre> or from the SQL dump file [```db.sql```](db.sql) to the SQLite database by using either of the following database browsers to migrate it:
     - DB Browser for SQLite
     - DBeaver
-5. If you first set up the repository on a clean slate, migrate the database as well by running the Django following command: <pre>python [manage.py](manage.py) migrate</pre>
+5. If you first set up the repository on a clean slate, migrate the database as well by running the following Django command: <pre>python [manage.py](manage.py) migrate</pre>
 6. Run <pre>python [manage.py](manage.py) runserver</pre> and, Voila!, the server should listen on the default port at <code>localhost:*default_port*</code>.
 
 ### Django configuration file (```.env```/```.ini```) defaults guide
