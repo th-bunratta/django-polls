@@ -1,8 +1,12 @@
-{% extends 'polls/base.html' %}
+{% extends 'polls/base/landing.html' %}
 {% block title %} Questions {% endblock %}
+{% block hero_title %}
+    {% if latest_question_list %}Questions
+    {% endif %}
+{% endblock %}
 {% block content %}
-    {% if latest_question_list %}<h1 class="title is-1 has-margin-top-12px">Questions</h1>
-<table class="table">
+    {% if latest_question_list %}
+<table class="table is-bordered is-striped">
     <thead>
     <tr>
         <th>#</th>
@@ -21,4 +25,3 @@
         <p>No polls are available.</p>
     {% endif %}
 {% endblock %}
-

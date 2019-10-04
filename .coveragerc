@@ -9,8 +9,8 @@ omit =
     /usr/*
     django_polls/*   # the main application dir contains only configuration
     info/*     # the info app is just for testing
-    # TODO: omit unit test files and directories
-    polls/migrations/* # TODO: omit migrations
+    polls/test/*
+    polls/migrations/*
 
 # explicitly include the main apps
 include =

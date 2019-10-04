@@ -1,13 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{{ question }}</title>
-</head>
-<body>
-    <h1>{{ question.question_text }}</h1>
-
-    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% extends 'polls/base/question.html' %}
+{% block title %}{{ question }}{% endblock %}
+{% block hero_title %}
+    {{ question.question_text }}
+{% endblock %}
+{% block content %}
+    {% if error_message %}<div class="notification is-warning"><p><strong>{{ error_message }}</strong></p></div>{% endif %}
 
     <form action="{% url 'polls:vote' question.id %}" method="post">
     {% csrf_token %}
@@ -15,7 +12,6 @@
     <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
     <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
     {% endfor %}
-    <input type="submit" value="Vote">
+        <input class="button is-success" type="submit" value="Vote">
     </form>
-</body>
-</html>
+{% endblock %}

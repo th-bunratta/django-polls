@@ -57,6 +57,7 @@ class QuestionModelTests(TestCase):
 
 
 class ChoiceModelTests(TestCase):
+
     def test_choice_str(self):
         choice_text = "Howdy"
         choice = Choice(choice_text=choice_text)
