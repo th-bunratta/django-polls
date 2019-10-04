@@ -5,6 +5,27 @@ from django.utils import timezone
 from polls.models import Question, Choice
 
 
+def create_question(question_text, days):
+    """
+    Create a question with the given `question_text` and published the
+    given number of `days` offset to now (negative for questions published
+    in the past, positive for questions that have yet to be published).
+    """
+    time = timezone.now() + datetime.timedelta(days=days)
+    return Question.objects.create(question_text=question_text, pub_date=time)
+
+
+def create_choice(choice_text, question_id):
+    return Choice.objects.create(choice_text=choice_text, choice_question_id=question_id)
+
+
+def vote_for(client, question_id, choice_id, vote_count=1):
+    response = None
+    for _ in range(vote_count):
+        response = client.post(reverse("polls:vote", args=(question_id,)), {'choice': choice_id})
+    return response
+
+
 class QuestionModelTests(TestCase):
 
     def test_was_published_recently_with_future_question(self):

@@ -1,18 +1,9 @@
 
 from django.test import TestCase
 from django.urls import reverse
-from django.utils import timezone
-from .test_models import Question, datetime
-
-
-def create_question(question_text, days):
-    """
-    Create a question with the given `question_text` and published the
-    given number of `days` offset to now (negative for questions published
-    in the past, positive for questions that have yet to be published).
-    """
-    time = timezone.now() + datetime.timedelta(days=days)
-    return Question.objects.create(question_text=question_text, pub_date=time)
+from django.shortcuts import get_object_or_404
+from polls.apps import PollsConfig
+from .test_models import Question, Choice, datetime, create_choice, create_question, vote_for
 
 
 class QuestionIndexViewTests(TestCase):
@@ -96,3 +87,22 @@ class QuestionDetailViewTests(TestCase):
         url = reverse('polls:detail', args=(past_question.id,))
         response = self.client.get(url)
         self.assertContains(response, past_question.question_text)
+
+
+class QuestionDetailVoteViewTests(TestCase):
+
+    def setUp(self) -> None:
+        self.main_question = create_question(question_text='Past Question.', days=-5)
+        self.main_choice = create_choice("Hi", 1)
+
+    def test_vote_single(self):
+        vote_for(self.client, self.main_question.id, self.main_choice.id)
+        self.assertEqual(1, get_object_or_404(Choice, pk=self.main_choice.id).votes)
+
+    def test_vote_multiple(self):
+        vote_for(self.client, self.main_question.id, self.main_choice.id, 112)
+        self.assertEqual(112, get_object_or_404(Choice, pk=self.main_choice.id).votes)
+
+    def test_vote_non_existent_choice(self):
+        response = vote_for(self.client, self.main_question.id, 3)
+        self.assertTrue(PollsConfig.NOT_EXIST_CHOICE_MSG in response.context['error_message'])

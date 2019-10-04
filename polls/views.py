@@ -1,4 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect
+from django.views.decorators.http import require_http_methods
 from django.shortcuts import get_object_or_404, render, render_to_response, redirect
 from django.template import RequestContext
 from django.urls import reverse
@@ -6,6 +7,7 @@ from django.views import generic, defaults
 from django.utils import timezone
 import json
 from .models import Choice, Question
+from .apps import PollsConfig
 
 
 class IndexView(generic.ListView):
@@ -35,6 +37,7 @@ class ResultsView(generic.DetailView):
     template_name = 'polls/results.html'
 
 
+@require_http_methods(["POST"])
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
     try:
@@ -42,7 +45,7 @@ def vote(request, question_id):
     except (KeyError, Choice.DoesNotExist):
         return render(request, 'polls/detail.html', {
             'question': question,
-            'error_message': "You didn't select a choice.",
+            'error_message': PollsConfig.NOT_EXIST_CHOICE_MSG,
         })
     else:
         selected_choice.votes += 1
