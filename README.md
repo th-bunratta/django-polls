@@ -31,16 +31,18 @@ For the list of dependent packages, see as follows or look up in [```requirement
 ### Django configuration file (```.env```/```.ini```) defaults guide
 | Config variable | Default value | Note |
 |:---:|:---:|:---:|
-|DEBUG|```True```|If the project is in development mode|
-|LANGUAGE_CODE|```en-us```|Default language for the project|
-|TIME_ZONE|```Asia/Bangkok```||
-|DATABASE_URL|```sqlite://./db.sqlite3```|If your SQLite database file is in the same root directory as the project|
+|`DEBUG`|```True```|If the project is in development mode|
+|`LANGUAGE_CODE`|```en-us```|Default language for the project|
+|`TIME_ZONE`|```Asia/Bangkok```||
+|`DATABASE_URL`|```sqlite://./db.sqlite3```|If your SQLite database file is in the same root directory as the project|
 
 ### Progress overview
-|Part #     | Description|Done?|
+|Part #     | Topic |Done?|
 |:---------:|:----------:|:---:|
-|I| Project, app, and first view creation |✓|
-|II| Database and model setup, migrations, Django model API, and site administration basics |✓|
-|III| More about responsive views, templates, request handling, and URL routing |✓|
-|IV| Simple forms, generic views and its classes |✓|
-|V| All about testing basics in Django |✓|
+|I| Project Bootstrapping |✓|
+|II| Databases, Models, and Site Administration |✓|
+|III| Routing & Templates |✓|
+|IV| Generic Views & Forms |✓|
+|V| Django Unit Testing |✓|
+|VI| Static Files |✓|
+|VII| Django Administration Customisation||
