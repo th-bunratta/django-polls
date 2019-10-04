@@ -1,8 +1,10 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, render_to_response, redirect
+from django.template import RequestContext
 from django.urls import reverse
-from django.views import generic
+from django.views import generic, defaults
 from django.utils import timezone
+import json
 from .models import Choice, Question
 
 
@@ -46,3 +48,9 @@ def vote(request, question_id):
         selected_choice.votes += 1
         selected_choice.save()
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
+
+def handler404(request, exception, template_name="404.html"):
+    response = render_to_response("polls/404.html", {'request': request.path.replace("/", "").replace("polls", "")})
+    response.status_code = 404
+    return response
