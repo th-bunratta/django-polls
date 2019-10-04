@@ -4,6 +4,15 @@
     Result: {{ question.question_text }}
 {% endblock %}
 {% block content %}
+    {% if messages %}
+        <div class="notification">
+            <ul class="messages">
+            {% for msg in messages %}
+            <li class="{{msg.tags}}">{{ msg }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
     <ul>
     {% for choice in question.choice_set.all %}
         <li><strong class="has-text-grey-dark">{{ choice.choice_text }}</strong> -- <strong class="has-text-info">{{ choice.votes }}</strong> vote{{ choice.votes|pluralize }}</li>

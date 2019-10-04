@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import get_object_or_404, render, render_to_response, redirect
@@ -50,6 +51,7 @@ def vote(request, question_id):
     else:
         selected_choice.votes += 1
         selected_choice.save()
+        messages.success(request, "Your choice successfully recorded. The result is shown below.")
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
 
