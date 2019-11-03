@@ -4,17 +4,7 @@
 {% block hero_title %}
     Sign in to Polls App
 {% endblock %}
-{% block content %}
-
-{% if next %}
-    {% if user.is_authenticated %}
-    <script>location.replace({% url 'polls:index' %})</script>
-    {% else %}
-    <p>Please sign in to view this page.</p>
-    {% endif %}
-{% endif %}
-
-    <div class="columns is-centered">
+{% block content %}<div class="columns is-centered">
         <div class="column is-7-tablet is-6-desktop is-6-widescreen">
           <form method="post" action="{% url 'accounts:login' %}" class="box is-centered">
               {% csrf_token %}
@@ -45,6 +35,11 @@
               {% if form.errors %}
                   <div class="notification is-danger">Your username or password was <strong>incorrect</strong>. Please try again.</div>
                 {% endif %}
+          {% if next %}
+                {% if not user.is_authenticated %}
+                    <div class="notification is-warning">Please <strong>sign in</strong> to fully interact with this page.</div>
+                {% endif %}
+            {% endif %}
           </form>
         </div>
     </div>
