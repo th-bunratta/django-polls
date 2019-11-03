@@ -9,7 +9,7 @@ from django.urls import reverse
 from django.views import generic, defaults
 from django.utils import timezone
 import json
-from .models import Choice, Question
+from .models import Choice, Question, Vote
 from .apps import PollsConfig
 import logging
 
@@ -32,6 +32,13 @@ class DetailView(generic.DetailView):
     model = Question
     template_name = 'polls/detail.html'
 
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['current_choice_id'] = Vote.objects.get(voter=self.request.user, question_id=int(self.kwargs['pk'])).choice.id
+        return context
+
     def get_queryset(self):
         """
         Excludes any questions that aren't published yet.
@@ -52,20 +59,34 @@ def vote(request, question_id):
         return redirect('polls:detail', question_id)
     else:
         question = get_object_or_404(Question, pk=question_id)
-        try:
-            selected_choice = question.choice_set.get(pk=request.POST['choice'])
-        except (KeyError, Choice.DoesNotExist):
-            logger.error('')
-            return render(request, 'polls/detail.html', {
-                'question': question,
-                'error_message': PollsConfig.NOT_EXIST_CHOICE_MSG,
-            })
+        if 'choice' not in request.POST: return render(request, 'polls/detail.html', {
+                    'question': question,
+                    'error_message': PollsConfig.NOT_EXIST_CHOICE_MSG,
+                })
         else:
-            selected_choice.votes += 1
-            selected_choice.save()
-            logger.info(f'Selected choices have been successfully recorded to {question.question_text}.')
-            messages.success(request, "Your choice has been successfully recorded. The result is shown below.")
-            return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+            choice = request.POST['choice']
+
+        def get_choice(selected_vote, message):
+            try:
+                selected_choice = question.choice_set.get(pk=choice)
+            except (KeyError, Choice.DoesNotExist):
+                logger.error('')
+                return render(request, 'polls/detail.html', {
+                    'question': question,
+                    'error_message': PollsConfig.NOT_EXIST_CHOICE_MSG,
+                })
+            else:
+                selected_vote.choice = selected_choice
+                selected_vote.save()
+                logger.info(f'The choice have been successfully upserted in {question.question_text}.')
+                messages.success(request, message)
+                return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+        try:
+            current_vote = Vote.objects.get(voter=request.user, question=question)
+            return get_choice(current_vote, "Your choice has been successfully recorded. The result is shown below.")
+        except (KeyError, Vote.DoesNotExist):
+            current_vote = Vote(voter=request.user, question=question)
+            return get_choice(current_vote, "Your choice has successfully been changed. The result is shown below.")
 
 
 def handler404(request, exception, template_name="404.html"):
