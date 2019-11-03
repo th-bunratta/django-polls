@@ -36,7 +36,8 @@ class DetailView(generic.DetailView):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         # Add in a QuerySet of all the books
-        context['current_choice_id'] = Vote.objects.get(voter=self.request.user, question_id=int(self.kwargs['pk'])).choice.id
+        if self.request.user.is_authenticated:
+            context['current_choice_id'] = Vote.objects.get(voter=self.request.user, question_id=int(self.kwargs['pk'])).choice.id
         return context
 
     def get_queryset(self):
