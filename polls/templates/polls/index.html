@@ -1,9 +1,16 @@
-{% extends 'polls/base/landing.html' %}
+{% extends 'base/landing.html' %}
 {% block title %} Questions {% endblock %}
 {% block hero_title %}
     {% if latest_question_list %}Questions
     {% endif %}
 {% endblock %}
+{% block subtitle %}
+    {% if user.is_authenticated %}
+        Welcome back, {{ user.username }}!
+    {% else %}
+    <p>Please <a class="has-text-weight-semibold" href="{% url 'login' %}">sign in</a> to vote.</p>
+    {% endif %}
+{% endblock subtitle %}
 {% block content %}
     {% if latest_question_list %}
 <table class="table is-bordered is-striped">
