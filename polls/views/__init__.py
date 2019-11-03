@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import get_object_or_404, render, render_to_response, redirect
 from django.template import RequestContext
@@ -42,6 +43,7 @@ class ResultsView(generic.DetailView):
     template_name = 'polls/results.html'
 
 
+@login_required
 @require_http_methods(["POST"])
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
