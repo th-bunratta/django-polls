@@ -7,8 +7,8 @@ from django.urls import reverse
 from django.views import generic, defaults
 from django.utils import timezone
 import json
-from .models import Choice, Question
-from .apps import PollsConfig
+from ..models import Choice, Question
+from ..apps import PollsConfig
 import logging
 
 logger = logging.getLogger(__name__)
