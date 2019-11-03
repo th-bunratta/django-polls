@@ -5,7 +5,7 @@
     Sign in to Polls App
 {% endblock %}
 {% block content %}<div class="columns is-centered">
-        <div class="column is-7-tablet is-6-desktop is-6-widescreen">
+        <div class="column is-7-tablet is-7-desktop is-7-widescreen">
           <form method="post" action="{% url 'accounts:login' %}" class="box is-centered">
               {% csrf_token %}
             <div class="field">
@@ -37,7 +37,7 @@
                 {% endif %}
           {% if next %}
                 {% if not user.is_authenticated %}
-                    <div class="notification is-warning">Please <strong>sign in</strong> to fully interact with this page.</div>
+                    <div class="notification is-warning">Please <strong>sign in</strong> to fully interact with the previous page.</div>
                 {% endif %}
             {% endif %}
           </form>
