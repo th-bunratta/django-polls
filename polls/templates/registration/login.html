@@ -8,8 +8,7 @@
 
 {% if next %}
     {% if user.is_authenticated %}
-    <p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
+    <script>location.replace({% url 'polls:index' %})</script>
     {% else %}
     <p>Please sign in to view this page.</p>
     {% endif %}
@@ -38,7 +37,7 @@
               </div>
             </div>
             <div class="field">
-              <button class="button is-success" type="submit">
+              <button class="button is-primary" type="submit">
                 Sign in
               </button>
             </div>
