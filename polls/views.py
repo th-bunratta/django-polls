@@ -9,6 +9,9 @@ from django.utils import timezone
 import json
 from .models import Choice, Question
 from .apps import PollsConfig
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class IndexView(generic.ListView):
@@ -17,6 +20,7 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         """Return the last five published questions."""
+        logger.info("Retrieved questions by date")
         return Question.objects.filter(
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')[:5]
@@ -44,6 +48,7 @@ def vote(request, question_id):
     try:
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
+        logger.error('')
         return render(request, 'polls/detail.html', {
             'question': question,
             'error_message': PollsConfig.NOT_EXIST_CHOICE_MSG,
@@ -51,6 +56,7 @@ def vote(request, question_id):
     else:
         selected_choice.votes += 1
         selected_choice.save()
+        logger.info(f'Selected choices have been successfully recorded to {question.question_text}.')
         messages.success(request, "Your choice has been successfully recorded. The result is shown below.")
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
