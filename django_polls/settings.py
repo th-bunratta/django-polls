@@ -29,6 +29,8 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = ['*', 'localhost']
 
+LOGIN_REDIRECT_URL = 'polls:index'
+
 # Application definition
 
 INSTALLED_APPS = [
