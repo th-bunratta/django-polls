@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import get_object_or_404, render, render_to_response, redirect
@@ -8,8 +9,8 @@ from django.urls import reverse
 from django.views import generic, defaults
 from django.utils import timezone
 import json
-from ..models import Choice, Question
-from ..apps import PollsConfig
+from .models import Choice, Question
+from .apps import PollsConfig
 import logging
 
 logger = logging.getLogger(__name__)
@@ -38,29 +39,33 @@ class DetailView(generic.DetailView):
         return Question.objects.filter(pub_date__lte=timezone.now())
 
 
-class ResultsView(generic.DetailView):
+class ResultsView(LoginRequiredMixin, generic.DetailView):
+    login_url = 'accounts:login'
     model = Question
     template_name = 'polls/results.html'
 
 
 @login_required
-@require_http_methods(["POST"])
+@require_http_methods(["GET", "POST"])
 def vote(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    try:
-        selected_choice = question.choice_set.get(pk=request.POST['choice'])
-    except (KeyError, Choice.DoesNotExist):
-        logger.error('')
-        return render(request, 'polls/detail.html', {
-            'question': question,
-            'error_message': PollsConfig.NOT_EXIST_CHOICE_MSG,
-        })
+    if request.method == 'GET':
+        return redirect('polls:detail', question_id)
     else:
-        selected_choice.votes += 1
-        selected_choice.save()
-        logger.info(f'Selected choices have been successfully recorded to {question.question_text}.')
-        messages.success(request, "Your choice has been successfully recorded. The result is shown below.")
-        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+        question = get_object_or_404(Question, pk=question_id)
+        try:
+            selected_choice = question.choice_set.get(pk=request.POST['choice'])
+        except (KeyError, Choice.DoesNotExist):
+            logger.error('')
+            return render(request, 'polls/detail.html', {
+                'question': question,
+                'error_message': PollsConfig.NOT_EXIST_CHOICE_MSG,
+            })
+        else:
+            selected_choice.votes += 1
+            selected_choice.save()
+            logger.info(f'Selected choices have been successfully recorded to {question.question_text}.')
+            messages.success(request, "Your choice has been successfully recorded. The result is shown below.")
+            return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
 
 def handler404(request, exception, template_name="404.html"):

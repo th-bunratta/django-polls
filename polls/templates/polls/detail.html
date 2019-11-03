@@ -12,6 +12,14 @@
     <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
     <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
     {% endfor %}
+    {% if user.is_authenticated %}
         <input class="button is-success" type="submit" value="Vote">
-    </form>
+        </form>
+    {% else %}
+        </form>
+            <div class="notification is-warning">
+                Please <a href="{% url 'accounts:login' %}?next={% url 'polls:detail' question.id %}"><strong>sign in</strong></a> to vote
+            </div>
+    {% endif %}
+
 {% endblock %}
