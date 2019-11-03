@@ -29,11 +29,16 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = ['*', 'localhost']
 
+LOGIN_URL = 'accounts:login'
+
 LOGIN_REDIRECT_URL = 'polls:index'
+
+LOGOUT_REDIRECT_URL = 'polls:index'
 
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts.apps.AccountsConfig',
     'polls.apps.PollsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
