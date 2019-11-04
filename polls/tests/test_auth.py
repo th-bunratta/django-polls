@@ -79,9 +79,9 @@ class AuthTest(TestCase):
 
         # Now check that he can vote after login
         response = self.client.post(reverse('accounts:login'),
-                    {'username':self.user.username, 'password':self.userpass})
+                    {'username':self.user.username, 'password': self.userpass})
         # submit a vote
-        response = self.client.post( vote_url, {'choice':str(choice_id)})
+        response = self.client.post(vote_url, {'choice': str(choice_id)})
         self.assertEqual(response.status_code, 302)
         # This time the redirect should be to poll results
         expect_url = reverse('polls:results', args=[self.q1.id])

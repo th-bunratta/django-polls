@@ -7,7 +7,7 @@
 {% block content %}
     {% if error_message %}<div class="notification is-warning"><p><strong>{{ error_message }}</strong></p></div>{% endif %}
 
-    <form action="{% url 'polls:vote' question.id %}" method="post">
+    <form{% if user.is_authenticated %} action="{% url 'polls:vote' question.id %}" method="post"{% endif %}>
     {% csrf_token %}
     {% for choice in question.choice_set.all %}
     <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"{% if choice.id == current_choice_id %} checked{% endif %}{% if not user.is_authenticated %} disabled{% endif %}>
@@ -19,7 +19,7 @@
     {% else %}
         </form>
             <div class="notification is-warning">
-                Please <a href="{% url 'accounts:login' %}?next={% url 'polls:detail' question.id %}"><strong>sign in</strong></a> to vote
+                Please <a href="{% url 'accounts:login' %}?next={{ request.path }}"><strong>sign in</strong></a> to vote
             </div>
     {% endif %}
 
