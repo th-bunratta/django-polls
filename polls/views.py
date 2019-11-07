@@ -1,19 +1,18 @@
+import logging
 from django.contrib import messages
-from django.http import HttpResponse, HttpResponseRedirect
-
+from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.shortcuts import get_object_or_404, render, render_to_response, redirect
 from django.urls import reverse
-from django.views import generic, defaults
+from django.views import generic
 from django.utils import timezone
-import json
 from .models import Choice, Question, Vote
 from .apps import PollsConfig
-import logging
 
-logger = logging.getLogger(__name__)
+
+LOGGER = logging.getLogger(__name__)
 
 
 class IndexView(generic.ListView):
@@ -22,7 +21,7 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         """Return the last five published questions."""
-        logger.info("Retrieved questions by date")
+        LOGGER.info("Retrieved questions by date")
         return Question.objects.filter(
             pub_date__lte=timezone.now()
         ).order_by('-pub_date')[:5]
@@ -63,10 +62,10 @@ def vote(request, question_id):
         return redirect('polls:detail', question_id)
     else:
         question = get_object_or_404(Question, pk=question_id)
-        if 'choice' not in request.POST: return render(request, 'polls/detail.html', {
-                    'question': question,
-                    'error_message': PollsConfig.NOT_EXIST_CHOICE_MSG,
-                })
+        if 'choice' not in request.POST:
+            return render(request, 'polls/detail.html', {
+                'question': question,
+                'error_message': PollsConfig.NOT_EXIST_CHOICE_MSG})
         else:
             choice = request.POST['choice']
 
@@ -74,7 +73,7 @@ def vote(request, question_id):
             try:
                 selected_choice = question.choice_set.get(pk=choice)
             except (KeyError, Choice.DoesNotExist):
-                logger.error('')
+                LOGGER.error('')
                 return render(request, 'polls/detail.html', {
                     'question': question,
                     'error_message': PollsConfig.NOT_EXIST_CHOICE_MSG,
@@ -82,7 +81,7 @@ def vote(request, question_id):
             else:
                 selected_vote.choice = selected_choice
                 selected_vote.save()
-                logger.info(f'The choice have been successfully upserted in {question.question_text}.')
+                LOGGER.info(f'The choice have been successfully upserted in {question.question_text}.')
                 messages.success(request, message)
                 return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
         try:
@@ -94,6 +93,6 @@ def vote(request, question_id):
 
 
 def handler404(request, exception, template_name="404.html"):
-    response = render_to_response("polls/404.html", {'request': request.path.replace("/", "").replace("polls", "")})
+    response = render_to_response(f"polls/{template_name}", {'request': request.path.replace("/", "").replace("polls", "")})
     response.status_code = 404
     return response
