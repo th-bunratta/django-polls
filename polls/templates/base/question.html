@@ -1,0 +1,12 @@
+{% extends "base/index.html" %}
+{% block body %}
+    <section class="hero is-info is-bold">
+        <div class="hero-body">
+            <div class="container">
+            <h3 class="title is-3 has-margin-top-12px">{% block hero_title %}{% endblock %}
+                {% block additional_hero_buttons %}{% endblock %} <a class="button is-info is-inverted is-outlined inline" href="{% url 'polls:index' %}">&lt; Back to Questions</a></h3>
+            </div>
+        </div>
+    </section>
+    {{ block.super }}
+{% endblock %}

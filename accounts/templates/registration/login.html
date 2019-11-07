@@ -1,0 +1,46 @@
+{% extends "base/landing.html" %}
+
+{% block title %} Login {% endblock %}
+{% block hero_title %}
+    Sign in to Polls App
+{% endblock %}
+{% block content %}<div class="columns is-centered">
+        <div class="column is-7-tablet is-7-desktop is-7-widescreen">
+          <form method="post" action="{% url 'accounts:login' %}" class="box is-centered">
+              {% csrf_token %}
+            <div class="field">
+              <label for="{{ form.username.id_for_label }}" class="label">{{ form.username.label_tag }}</label>
+              <div class="control has-icons-left">
+                <input name="{{ form.username.html_name }}" id="{{ form.username.id_for_label }}" type="text" placeholder="Your registered username" class="input" autofocus required>
+                <span class="icon is-small is-left">
+                  <i class="fa fa-user"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="{{ form.password.id_for_label }}" class="label">{{ form.password.label_tag }}</label>
+              <div class="control has-icons-left">
+                <input name="{{ form.password.html_name }}" id="{{ form.password.id_for_label }}" type="password" placeholder="Your registered password" class="input" required>
+                <span class="icon is-small is-left">
+                  <i class="fa fa-lock"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field">
+              <button class="button is-primary" type="submit">
+                Sign in
+              </button>
+            </div>
+              <input type="hidden" name="next" value="{{ next }}">
+              {% if form.errors %}
+                  <div class="notification is-danger">Your username or password was <strong>incorrect</strong>. Please try again.</div>
+                {% endif %}
+          {% if next %}
+                {% if not user.is_authenticated %}
+                    <div class="notification is-warning">Please <strong>sign in</strong> to fully interact with the previous page.</div>
+                {% endif %}
+            {% endif %}
+          </form>
+        </div>
+    </div>
+{% endblock %}

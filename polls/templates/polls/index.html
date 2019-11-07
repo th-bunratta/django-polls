@@ -1,9 +1,16 @@
-{% extends 'polls/base/landing.html' %}
+{% extends 'base/landing.html' %}
 {% block title %} Questions {% endblock %}
 {% block hero_title %}
     {% if latest_question_list %}Questions
     {% endif %}
 {% endblock %}
+{% block subtitle %}
+    {% if user.is_authenticated %}
+        Welcome back, <strong>{{ user.username }}</strong>!
+    {% else %}
+    <p>Please <a class="has-text-weight-semibold" href="{% url 'accounts:login' %}">sign in</a> to vote.</p>
+    {% endif %}
+{% endblock subtitle %}
 {% block content %}
     {% if latest_question_list %}
 <table class="table is-bordered is-striped">
@@ -21,7 +28,13 @@
         </tr>
         {% endfor %}
     </tbody>
-</table>{% else %}
+</table>
+        {% else %}
         <p>No polls are available.</p>
     {% endif %}
+    {% for message in messages %}
+    <div class="notification is-info">
+    {{ message }}
+</div>
+    {% endfor %}
 {% endblock %}

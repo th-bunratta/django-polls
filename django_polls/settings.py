@@ -15,9 +15,12 @@ from dj_database_url import parse as db_url
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = Path(__file__).parent # os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).parent  # os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
@@ -29,9 +32,16 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = ['*', 'localhost']
 
+LOGIN_URL = 'accounts:login'
+
+LOGIN_REDIRECT_URL = 'polls:index'
+
+LOGOUT_REDIRECT_URL = 'polls:index'
+
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts.apps.AccountsConfig',
     'polls.apps.PollsConfig',
     'django.contrib.admin',
     'django.contrib.auth',

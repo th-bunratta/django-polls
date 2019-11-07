@@ -19,14 +19,13 @@ def create_choice(choice_text, question_id):
     return Choice.objects.create(choice_text=choice_text, choice_question_id=question_id)
 
 
-def vote_for(client, question_id, choice_id, vote_count=1):
-    response = None
-    for _ in range(vote_count):
-        response = client.post(reverse("polls:vote", args=(question_id,)), {'choice': choice_id})
+def vote_for(client, question_id, choice_id, user):
+    response = client.post(reverse("polls:vote", args=(question_id,)), {'choice': choice_id, 'user': user})
     return response
 
 
 class QuestionModelTests(TestCase):
+
 
     def test_was_published_recently_with_future_question(self):
         """

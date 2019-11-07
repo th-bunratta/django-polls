@@ -46,3 +46,14 @@ For the list of dependent packages, see as follows or look up in [```requirement
 |V| Django Unit Testing |✓|
 |VI| Static Files |✓|
 |VII| Django Administration Customisation||
+
+#### Authentication Tutorial
+|Story #     | Topic |Done?|
+|:---------:|:----------:|:---:|
+|I| User Login |✓|
+|II| Polls Page Greets User by Name |✓|
+|III| User Can Logout |✓|
+|IV| User Must Login to Vote |✓|
+|V| Vote for a Poll Replaces Previous Vote |✓|
+|VI| Poll Details Page Shows a Visitor's Previous Vote |✓|
+|VII| Poll Details Page Contains Links to View Results and List of Polls |✓|

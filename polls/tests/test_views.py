@@ -2,14 +2,12 @@
 from django.test import TestCase
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import User
 from polls.apps import PollsConfig
 from .test_models import Question, Choice, datetime, create_choice, create_question, vote_for
 
 
 class QuestionIndexViewTests(TestCase):
-    def setUp(self) -> None:
-        pass
-
     def test_no_questions(self):
         """
         If no questions exist, an appropriate message is displayed.
@@ -68,6 +66,7 @@ class QuestionIndexViewTests(TestCase):
 
 
 class QuestionDetailViewTests(TestCase):
+
     def test_future_question(self):
         """
         The detail view of a question with a pub_date in the future
@@ -92,17 +91,28 @@ class QuestionDetailViewTests(TestCase):
 class QuestionDetailVoteViewTests(TestCase):
 
     def setUp(self) -> None:
+        self.user = User.objects.create_user(username='testuser', password='secret')
+        self.user2 = User.objects.create_user(username='testuser2', password='secret')
+        self.user3 = User.objects.create_user(username='testuser3', password='secret')
+        self.user4 = User.objects.create_user(username='testuser4', password='secret')
+        self.client.login(username='testuser', password='secret')
         self.main_question = create_question(question_text='Past Question.', days=-5)
         self.main_choice = create_choice("Hi", 1)
 
     def test_vote_single(self):
-        vote_for(self.client, self.main_question.id, self.main_choice.id)
-        self.assertEqual(1, get_object_or_404(Choice, pk=self.main_choice.id).votes)
+        vote_for(self.client, self.main_question.id, self.main_choice.id, self.user)
+        self.assertEqual(1, get_object_or_404(Choice, pk=self.main_choice.id).votes())
 
     def test_vote_multiple(self):
-        vote_for(self.client, self.main_question.id, self.main_choice.id, 112)
-        self.assertEqual(112, get_object_or_404(Choice, pk=self.main_choice.id).votes)
+        vote_for(self.client, self.main_question.id, self.main_choice.id, self.user)
+        self.client.login(username='testuser2', password='secret')
+        vote_for(self.client, self.main_question.id, self.main_choice.id, self.user)
+        self.client.login(username='testuser3', password='secret')
+        vote_for(self.client, self.main_question.id, self.main_choice.id, self.user)
+        self.client.login(username='testuser4', password='secret')
+        vote_for(self.client, self.main_question.id, self.main_choice.id, self.user)
+        self.assertEqual(4, get_object_or_404(Choice, pk=self.main_choice.id).votes())
 
     def test_vote_non_existent_choice(self):
-        response = vote_for(self.client, self.main_question.id, 3)
+        response = vote_for(self.client, self.main_question.id, 3, self.user)
         self.assertTrue(PollsConfig.NOT_EXIST_CHOICE_MSG in response.context['error_message'])

@@ -1,17 +1,26 @@
-{% extends 'polls/base/question.html' %}
+{% extends 'base/question.html' %}
 {% block title %}{{ question }}{% endblock %}
+{% block additional_hero_buttons %}<a class="button is-info is-inverted is-outlined inline" href="{% url 'polls:results' question.id %}">Show Results</a>{% endblock %}
 {% block hero_title %}
     {{ question.question_text }}
 {% endblock %}
 {% block content %}
     {% if error_message %}<div class="notification is-warning"><p><strong>{{ error_message }}</strong></p></div>{% endif %}
 
-    <form action="{% url 'polls:vote' question.id %}" method="post">
+    <form{% if user.is_authenticated %} action="{% url 'polls:vote' question.id %}" method="post"{% endif %}>
     {% csrf_token %}
     {% for choice in question.choice_set.all %}
-    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}"{% if choice.id == current_choice_id %} checked{% endif %}{% if not user.is_authenticated %} disabled{% endif %}>
     <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br>
     {% endfor %}
+    {% if user.is_authenticated %}
         <input class="button is-success" type="submit" value="Vote">
-    </form>
+        </form>
+    {% else %}
+        </form>
+            <div class="notification is-warning">
+                Please <a href="{% url 'accounts:login' %}?next={{ request.path }}"><strong>sign in</strong></a> to vote
+            </div>
+    {% endif %}
+
 {% endblock %}

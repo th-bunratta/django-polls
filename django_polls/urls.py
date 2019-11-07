@@ -22,5 +22,6 @@ urlpatterns = [
     path('', RedirectView.as_view(url=ROOT_REDIR_URL)),
     path('admin/', admin.site.urls),
     path('polls/', include('polls.urls')),
+    path('accounts/', include('accounts.urls')),
 ]
 handler404 = 'polls.views.handler404'

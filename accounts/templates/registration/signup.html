@@ -1,0 +1,54 @@
+{% extends "base/landing.html" %}
+
+{% block title %}Sign up{% endblock %}
+{% block hero_title %}
+    Sign up with Polls App
+{% endblock %}
+{% block content %}
+    <div class="columns is-centered">
+        <div class="column is-7-tablet is-7-desktop is-7-widescreen">
+          <form method="post" class="box is-centered">
+              {% csrf_token %}
+            <div class="field">
+              <label for="{{ form.username.id_for_label }}" class="label">{{ form.username.label_tag }}</label>
+              <div class="control has-icons-left">
+                <input name="{{ form.username.html_name }}" id="{{ form.username.id_for_label }}" type="text" placeholder="{{ form.username.help_text }}" class="input" autofocus required>
+                <span class="icon is-small is-left">
+                  <i class="fa fa-user"></i>
+                </span>
+              </div>
+            </div>
+            <div class="field">
+              <label for="{{ form.password1.id_for_label }}" class="label">{{ form.password1.label_tag }}</label>
+              <div class="control has-icons-left">
+                <input name="{{ form.password1.html_name }}" id="{{ form.password1.id_for_label }}" type="password" placeholder="Your desired password" class="input" required>
+                <span class="icon is-small is-left">
+                  <i class="fa fa-lock"></i>
+                </span>
+
+              </div>
+            </div>
+            <div class="notification">{{ form.password1.help_text }}</div>
+          <div class="field">
+              <label for="{{ form.password2.id_for_label }}" class="label">{{ form.password2.label_tag }}</label>
+              <div class="control has-icons-left">
+                <input name="{{ form.password2.html_name }}" id="{{ form.password2.id_for_label }}" type="password" placeholder="{{ form.password2.help_text }}" class="input" required>
+                <span class="icon is-small is-left">
+                  <i class="fa fa-lock"></i>
+                </span>
+
+              </div>
+            </div>
+            <div class="field">
+              <button class="button is-info" type="submit">
+                Sign up
+              </button>
+            </div>
+              <input type="hidden" name="next" value="{{ next }}">
+            {% for field in form %}
+                {% if field.errors %}<div class="notification is-danger">In the field <strong>{{ field.label }}</strong>: {{ field.errors|striptags }}</div>{% endif %}
+				{% endfor %}
+          </form>
+        </div>
+    </div>
+{% endblock %}
