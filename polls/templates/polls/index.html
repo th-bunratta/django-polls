@@ -24,7 +24,7 @@
         {% for question in latest_question_list|dictsort:"id" %}
         <tr>
              <td>{{ question.id }}</td>
-            <td><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></td>
+            <td><a id="q{{ question.id }}" href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></td>
         </tr>
         {% endfor %}
     </tbody>

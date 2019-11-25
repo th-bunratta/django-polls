@@ -5,7 +5,7 @@ from django.utils import timezone
 from polls.models import Question, Choice
 
 
-def create_question(question_text, days):
+def create_question(question_text, days=0):
     """
     Create a question with the given `question_text` and published the
     given number of `days` offset to now (negative for questions published

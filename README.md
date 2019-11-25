@@ -57,3 +57,11 @@ For the list of dependent packages, see as follows or look up in [```requirement
 |V| Vote for a Poll Replaces Previous Vote |✓|
 |VI| Poll Details Page Shows a Visitor's Previous Vote |✓|
 |VII| Poll Details Page Contains Links to View Results and List of Polls |✓|
+
+#### Selenium Tutorial
+| #     | Instructions |Done?|
+|:---------:|:----------:|:---:|
+|I| Go to /polls/. Find an H1 tag and verify that it contains “Current Polls” (or whatever text your heading is). |✓|
+|II| Got to /polls/ and find a poll question on the page. The test passes if it is found.|✓|
+|III| Click on a polls hyperlink. Verify that it goes to a page with list of choices to vote on. |✓|
+|IV| Click on the first choice. Verify that it goes to a page of voting results. |✓|
