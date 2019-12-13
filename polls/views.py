@@ -73,7 +73,7 @@ def vote(request, question_id):
             try:
                 selected_choice = question.choice_set.get(pk=choice)
             except (KeyError, Choice.DoesNotExist):
-                LOGGER.error('')
+                LOGGER.exception(Choice.DoesNotExist)
                 return render(request, 'polls/detail.html', {
                     'question': question,
                     'error_message': PollsConfig.NOT_EXIST_CHOICE_MSG,

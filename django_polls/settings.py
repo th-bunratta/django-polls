@@ -133,3 +133,31 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 ROOT_REDIR_URL = config('ROOT_REDIR_URL', cast=str)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'standard': {
+            'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s'
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'standard'
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': config('DJANGO_LOG_LEVEL', 'INFO'),
+            'propagate': True,
+        },
+        'polls': {
+            'handlers': ['console'],
+            'level': config('DJANGO_LOG_LEVEL', 'INFO'),
+        },
+    },
+}
